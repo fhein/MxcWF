@@ -51,11 +51,11 @@ class WorkflowEngine implements AugmentedObject
 
         $statusIds = $this->db->fetchCol('SELECT DISTINCT statusId FROM s_mxcbc_workflow_job ORDER BY statusID ASC');
         foreach ($statusIds as $statusId) {
-            $orders = $this->orderTool->getOrdersByStatus($statusId);
-            if (empty($orders)) continue;
+            $orderIds = $this->orderTool->getOrderIdsByStatus($statusId);
+            if (empty($orderIds)) continue;
             $eventName = 'status' . strval($statusId);
-            foreach ($orders as $order) {
-                $this->events->trigger($eventName, $this, ['order' => $order]);
+            foreach ($orderIds as $orderId) {
+                $this->events->trigger($eventName, $this, ['orderID' => $orderId]);
             }
         }
 
@@ -136,5 +136,10 @@ class WorkflowEngine implements AugmentedObject
 
     public function isPrepayment(array $order) {
         return $this->orderTool->isPrepayment($order['paymentID']);
+    }
+
+    public function getOrder(int $orderId)
+    {
+        return $this->orderTool->getOrder($orderId);
     }
 }
