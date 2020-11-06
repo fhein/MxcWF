@@ -2,7 +2,6 @@
 
 namespace MxcWorkflow\Workflow;
 
-use MxcCommons\EventManager\EventManagerInterface;
 use MxcCommons\EventManager\ListenerAggregateTrait;
 use MxcCommons\Plugin\Service\ModelManagerAwareTrait;
 use MxcCommons\ServiceManager\AugmentedObject;

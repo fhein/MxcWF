@@ -66,10 +66,10 @@ class WorkflowEngine implements AugmentedObject
     {
         $jobs = $this->db->fetchAll('SELECT * FROM s_mxcbc_workflow_job WHERE active = 1');
         foreach ($jobs as $job) {
-            $listener = $job['listener'];
             $eventName = 'status' . strval($job['statusId']);
-            $module = substr($listener, 0, strpos($listener, '\\'));
-            $listener = $this->getListener($module, $listener);
+            $class = $job['listener'];
+            $module = substr($class, 0, strpos($class, '\\'));
+            $listener = $this->getServices($module)->get($class);
             $this->listeners[] = $this->events->attach($eventName, [$listener, 'run'], $job['priority']);
         }
     }
@@ -80,13 +80,6 @@ class WorkflowEngine implements AugmentedObject
             $this->events->detach($callback);
         }
         $this->listeners = [];
-    }
-
-    protected function getListener(string $module, string $class)
-    {
-        $services = $this->getServices($module);
-        $listener = $services->get($class);
-        return $listener;
     }
 
     protected function getServices(string $module)
