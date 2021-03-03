@@ -127,8 +127,18 @@ class WorkflowEngine implements AugmentedObject
         return $this->orderTool->isPaypal($order['paymentID']);
     }
 
+    public function isKlarna(array $order)
+    {
+        return $this->orderTool->isKlarna($order['paymentID']);
+    }
+
     public function isPrepayment(array $order) {
         return $this->orderTool->isPrepayment($order['paymentID']);
+    }
+
+    public function getPaymentProvider(array $order)
+    {
+        return $this->orderTool->getPaymentProvider($order['paymentID']);
     }
 
     public function getOrder(int $orderId)
