@@ -9,8 +9,6 @@ use MxcCommons\Plugin\Service\ModelManagerAwareTrait;
 use MxcCommons\ServiceManager\AugmentedObject;
 use MxcCommons\Toolbox\Shopware\MailTool;
 use MxcCommons\Toolbox\Shopware\OrderTool;
-use MxcDropship\Dropship\DropshipManager;
-use MxcDropship\Jobs\SendOrders;
 use DateTime;
 use DateInterval;
 
@@ -24,12 +22,6 @@ class WorkflowEngine implements AugmentedObject
     /** @var MailTool */
     protected $mailer;
 
-    /** @var SendOrders|null */
-    protected $sendOrderJob;
-
-    /** @var DropshipManager|null */
-    protected $dropshipManager;
-
     /** @var OrderTool */
     protected $orderTool;
 
@@ -37,11 +29,9 @@ class WorkflowEngine implements AugmentedObject
 
     protected $listeners = [];
 
-    public function __construct(MailTool $mailer, OrderTool $orderTool, ?SendOrders $sendOrderJob, ?DropshipManager $dropshipManager)
+    public function __construct(MailTool $mailer, OrderTool $orderTool)
     {
         $this->mailer = $mailer;
-        $this->sendOrderJob = $sendOrderJob;
-        $this->dropshipManager = $dropshipManager;
         $this->orderTool = $orderTool;
     }
 

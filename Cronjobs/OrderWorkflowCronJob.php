@@ -29,7 +29,7 @@ class OrderWorkflowCronJob implements SubscriberInterface
             $job->run();
             $result = 'OrderWorkflow cronjob successfully completed.';
         } catch (Throwable $e) {
-            if ($log) $log->except($e, false, false);
+            if ($log) $log->except($e, true, false);
             $result = 'Exception occured.';
         }
         // displayed in Backend/Settings/Cronjobs
